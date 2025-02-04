@@ -65,8 +65,6 @@ public class IrregularShapeColliderDetector : MonoBehaviour
 
         Vector2 aoeCenter = transform.position;
 
-    
-
         
     }
 }

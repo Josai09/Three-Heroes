@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Three Heroes.sln"
+    "dotnet.defaultSolution": "Three-Heroes.sln"
 }
