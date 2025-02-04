@@ -63,7 +63,9 @@ public class IrregularShapeColliderDetector : MonoBehaviour
 
     void DetectObjectsCircleAOE(){
 
-        Vector2 aoeCenter = transform.position;
+        Vector2 radius = transform.position;
+
+        //comment
 
         
     }
