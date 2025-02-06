@@ -14,12 +14,12 @@ public class KnockBackIndividualHeroes : MonoBehaviour
 
     bool knockback = false;
 
-    bool trigger = false;
+    //bool trigger = false;
 
-    Vector2 otherobject;
+    //Vector2 otherobject;
 
-    [SerializeField]
-    float _speed = 5f;
+    /*[SerializeField]
+    float _speed = 5f;*/
 
     //[SerializeField]
     //GameObject tightposition;
@@ -104,7 +104,7 @@ public class KnockBackIndividualHeroes : MonoBehaviour
 
     void ApplyKnockBack(){
 
-        Vector2 direction = (_rigidbodybounds.position - _rigidbodyheroes.position).normalized;
+        Vector2 direction = (_rigidbodyheroes.position - _rigidbodybounds.position).normalized;
 
         _rigidbodyheroes.AddForce(direction * knockbackforce, ForceMode2D.Impulse);
 
@@ -120,8 +120,8 @@ public class KnockBackIndividualHeroes : MonoBehaviour
 
     }
 
-    private void Tight(GameObject tightposition){
+    /*private void Tight(GameObject tightposition){
 
         
-    }
+    }*/
 }

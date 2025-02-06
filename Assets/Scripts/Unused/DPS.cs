@@ -8,7 +8,7 @@ public class DPS : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private Rigidbody2D _rigid;
+    /*private Rigidbody2D _rigid;
 
     private Vector2 InputKey;
 
@@ -51,7 +51,7 @@ public class DPS : MonoBehaviour
 
         _rigid.velocity = movementInput * _speed;
 
-    }
+    }*/
 
 
 }

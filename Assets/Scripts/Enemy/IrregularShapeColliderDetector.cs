@@ -7,6 +7,8 @@ public class IrregularShapeColliderDetector : MonoBehaviour
     private CompositeCollider2D compositeCollider;
     private ContactFilter2D filter;
     private List<Collider2D> detectedObjects = new List<Collider2D>();
+    private CircleCollider2D[] circlecolliders;
+    private ContactFilter2D filtercircle;
 
     
 
@@ -16,27 +18,30 @@ public class IrregularShapeColliderDetector : MonoBehaviour
 
         filter.useTriggers = false;
 
-        BoxCollider2D[] circlecolliders = GetComponents<BoxCollider2D>();
+        circlecolliders = GetComponents<CircleCollider2D>();
 
-        BoxCollider2D firstCollider = circlecolliders[0];  // First collider
+        if(circlecolliders == null){
 
-        BoxCollider2D secondCollider = circlecolliders[1];
-
-        BoxCollider2D thirdCollider = circlecolliders[2];
-
-        if (firstCollider == null || secondCollider == null || thirdCollider == null){
-
-            Debug.Log("Game Object doesn't have circle collider");
+            Debug.Log("Object doesn't have circle collider");
 
         }
 
+        filtercircle.useTriggers = false;
+
+        
     }
 
     void Update()
     {
         DetectObjectsInsideAOE();
 
-        DetectObjectsCircleAOE();
+        if(circlecolliders != null){
+
+            DetectObjectsCircleAOE();
+
+        }
+
+        
 
     }
 
@@ -63,9 +68,24 @@ public class IrregularShapeColliderDetector : MonoBehaviour
 
     void DetectObjectsCircleAOE(){
 
-        Vector2 radius = transform.position;
+        foreach (CircleCollider2D collider in circlecolliders){
 
-        //comment
+            List<Collider2D> detectedobjects = new List<Collider2D>();
+
+            collider.OverlapCollider(filtercircle,detectedobjects);
+
+            foreach (Collider2D col in detectedobjects){
+
+                Debug.Log(this.gameObject.name + "detected " + col.gameObject.name);
+
+            }
+
+
+
+
+
+        }
+
 
         
     }
