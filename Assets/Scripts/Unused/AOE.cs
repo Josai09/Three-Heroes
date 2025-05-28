@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AOE : MonoBehaviour
 {
+
     CompositeCollider2D colliderAOE;
     Collider2D[] results = new Collider2D[10]; // Array to store results
     ContactFilter2D filter; // Used to filter the results
@@ -12,6 +13,8 @@ public class AOE : MonoBehaviour
 
     [SerializeField]
     float coba = 0;
+
+    private HashSet<GameObject> damagedObjectsThisFrame = new HashSet<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +83,9 @@ public class AOE : MonoBehaviour
             if(hit.tag == "Heroes"){
 
                 Debug.Log("AOE (Circle) detected: " + hit.gameObject.name);
-        }
+                
+
+            }
 
         }
         ///////////////////

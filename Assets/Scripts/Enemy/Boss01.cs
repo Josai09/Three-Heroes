@@ -16,6 +16,8 @@ public class Boss01 : MonoBehaviour
 
     SpriteRenderer _spriterenderer;
 
+    bool _isAttacking = false;
+
     void Start()
     {
         //ngejer musuh (aggro sistem)
@@ -37,6 +39,12 @@ public class Boss01 : MonoBehaviour
 
         FliptoTarget();
 
+        if(!_isAttacking){
+
+            StartCoroutine(AttackRoll());
+
+        }
+
         
     }
 
@@ -47,6 +55,9 @@ public class Boss01 : MonoBehaviour
         this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position,_target.transform.position,_speed * Time.deltaTime);
 
         MoveAnimation(distance);
+
+
+        
         
 
     }
@@ -78,6 +89,148 @@ public class Boss01 : MonoBehaviour
             _spriterenderer.flipX = false;
 
         }
+
+    }
+
+    IEnumerator AttackRoll(){
+
+        _isAttacking = true;
+
+        int RandomNumber = Random.Range(1,6);
+
+        Debug.Log("random" + RandomNumber);
+
+
+        if(RandomNumber == 1){
+
+            _spriteanimator.SetTrigger("1");
+
+            yield return null;
+
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_attack")){
+
+                yield return null;
+            }
+
+            AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            while (stateInfo.normalizedTime < 1.0f) {
+
+                yield return null;
+
+                stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            }
+
+            _isAttacking = false;
+
+
+        }
+        else if (RandomNumber == 2){
+
+            _spriteanimator.SetTrigger("2");
+
+            yield return null;
+
+            while(!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_position")){
+
+                yield return null;
+
+            }
+
+            AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            while (stateInfo.normalizedTime < 1.0f) {
+
+                yield return null;
+
+                stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            }
+            
+            _isAttacking = false;
+
+        }
+        else if (RandomNumber == 3){
+
+            _spriteanimator.SetTrigger("3");
+
+            yield return null;
+
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_donut")){
+
+                yield return null;
+
+            }
+
+            AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            while (stateInfo.normalizedTime < 1.0f){
+
+                yield return null;
+
+                stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            _isAttacking = false;
+
+        }
+        else if (RandomNumber == 4){
+
+            _spriteanimator.SetTrigger("4");
+
+            yield return null;
+
+            while(!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("Knockback_attack")){
+
+                yield return null;
+            }
+
+            AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            while (stateInfo.normalizedTime < 1.0f){
+
+                yield return null;
+
+                stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            }
+
+            _isAttacking = false;
+
+
+        }
+        else if (RandomNumber == 5){
+
+            _spriteanimator.SetTrigger("5");
+
+            yield return null;
+
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("StackMarker_attack")){
+
+                yield return null;
+
+            }
+
+            AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            while(stateInfo.normalizedTime < 1.0f){
+
+                yield return null;
+
+                stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
+
+            }
+
+            _isAttacking = false;
+
+
+        }
+
+        
+
+        
+
 
     }
 
