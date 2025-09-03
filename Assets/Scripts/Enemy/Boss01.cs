@@ -6,11 +6,14 @@ public class Boss01 : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField]
-    public GameObject _target;
+    GameObject _target;
+    //kalo mw dibalikit semuanyakudu jagi _target update juga diilangin commentnya
 
     [SerializeField]
     float _speed = 1;
+
+    [SerializeField]
+    int _bosshealth = 100;
 
     Animator _spriteanimator;
 
@@ -23,10 +26,35 @@ public class Boss01 : MonoBehaviour
         //ngejer musuh (aggro sistem)
         //chip attack
         //Undodgeable Attack (AOE,Knockback,Donut AOE, Stack Marker)
+        //bosshealth
 
         _spriteanimator = GetComponentInChildren<Animator>();
 
         _spriterenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (AggroManager.Instance.target == null)
+        {
+
+            GameObject[] heroes = GameObject.FindGameObjectsWithTag("Heroes");
+
+            if (heroes.Length > 0)
+            {
+
+                AggroManager.Instance.target = heroes[0];
+
+                Debug.Log("Target set to " + heroes[0].name);
+
+            }
+            else
+            {
+
+                Debug.Log("No tag heroes found");
+
+            }
+
+        }
+        
+        _target = AggroManager.Instance.target;
 
 
     }
@@ -34,57 +62,69 @@ public class Boss01 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _target = AggroManager.Instance.target;
 
         TargetandMove();
 
         FliptoTarget();
 
-        if(!_isAttacking){
+        if (!_isAttacking)
+        {
 
             StartCoroutine(AttackRoll());
 
         }
 
-        
+
     }
 
-    private void TargetandMove(){
+    public void TargetandMove()
+    {
+
 
         float distance = Vector3.Distance(_target.transform.position, this.transform.position);
 
-        this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position,_target.transform.position,_speed * Time.deltaTime);
+        this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, _target.transform.position, _speed * Time.deltaTime);
 
         MoveAnimation(distance);
 
-
-        
         
 
     }
 
-    private void MoveAnimation(float distance){
+    private void MoveAnimation(float distance)
+    {
 
-        if(distance > 0){
+        if (distance > 0)
+        {
 
-            _spriteanimator.SetBool("Walk",true);
+            _spriteanimator.SetBool("Walk", true);
 
         }
-        else if(distance == 0){
+        else if (distance == 0)
+        {
 
-            _spriteanimator.SetBool("Walk",false);
+            _spriteanimator.SetBool("Walk", false);
+
+            _isAttacking = true;
+
+
 
         }
 
     }
 
-    private void FliptoTarget(){
+    private void FliptoTarget()
+    {
 
-        if(_target.transform.position.x > this.transform.position.x){
+        if (_target.transform.position.x > this.transform.position.x)
+        {
 
             _spriterenderer.flipX = true;
 
         }
-        else{
+        else
+        {
 
             _spriterenderer.flipX = false;
 
@@ -92,29 +132,35 @@ public class Boss01 : MonoBehaviour
 
     }
 
-    IEnumerator AttackRoll(){
+    IEnumerator AttackRoll()
+    {
 
+        
         _isAttacking = true;
 
-        int RandomNumber = Random.Range(1,6);
+        int RandomNumber = 1;
+        //int RandomNumber = Random.Range(1, 6);
 
         Debug.Log("random" + RandomNumber);
 
 
-        if(RandomNumber == 1){
+        if (RandomNumber == 1)
+        {
 
             _spriteanimator.SetTrigger("1");
 
             yield return null;
 
-            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_attack")){
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_attack"))
+            {
 
                 yield return null;
             }
 
             AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
-            while (stateInfo.normalizedTime < 1.0f) {
+            while (stateInfo.normalizedTime < 1.0f)
+            {
 
                 yield return null;
 
@@ -126,13 +172,15 @@ public class Boss01 : MonoBehaviour
 
 
         }
-        else if (RandomNumber == 2){
+        else if (RandomNumber == 2)
+        {
 
             _spriteanimator.SetTrigger("2");
 
             yield return null;
 
-            while(!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_position")){
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_position"))
+            {
 
                 yield return null;
 
@@ -140,24 +188,27 @@ public class Boss01 : MonoBehaviour
 
             AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
-            while (stateInfo.normalizedTime < 1.0f) {
+            while (stateInfo.normalizedTime < 1.0f)
+            {
 
                 yield return null;
 
                 stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
             }
-            
+
             _isAttacking = false;
 
         }
-        else if (RandomNumber == 3){
+        else if (RandomNumber == 3)
+        {
 
             _spriteanimator.SetTrigger("3");
 
             yield return null;
 
-            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_donut")){
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_donut"))
+            {
 
                 yield return null;
 
@@ -165,7 +216,8 @@ public class Boss01 : MonoBehaviour
 
             AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
-            while (stateInfo.normalizedTime < 1.0f){
+            while (stateInfo.normalizedTime < 1.0f)
+            {
 
                 yield return null;
 
@@ -175,20 +227,23 @@ public class Boss01 : MonoBehaviour
             _isAttacking = false;
 
         }
-        else if (RandomNumber == 4){
+        else if (RandomNumber == 4)
+        {
 
             _spriteanimator.SetTrigger("4");
 
             yield return null;
 
-            while(!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("Knockback_attack")){
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("Knockback_attack"))
+            {
 
                 yield return null;
             }
 
             AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
-            while (stateInfo.normalizedTime < 1.0f){
+            while (stateInfo.normalizedTime < 1.0f)
+            {
 
                 yield return null;
 
@@ -200,13 +255,15 @@ public class Boss01 : MonoBehaviour
 
 
         }
-        else if (RandomNumber == 5){
+        else if (RandomNumber == 5)
+        {
 
             _spriteanimator.SetTrigger("5");
 
             yield return null;
 
-            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("StackMarker_attack")){
+            while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("StackMarker_attack"))
+            {
 
                 yield return null;
 
@@ -214,7 +271,8 @@ public class Boss01 : MonoBehaviour
 
             AnimatorStateInfo stateInfo = _spriteanimator.GetCurrentAnimatorStateInfo(0);
 
-            while(stateInfo.normalizedTime < 1.0f){
+            while (stateInfo.normalizedTime < 1.0f)
+            {
 
                 yield return null;
 
@@ -224,13 +282,18 @@ public class Boss01 : MonoBehaviour
 
             _isAttacking = false;
 
-
         }
 
-        
+    }
 
-        
+    public void BossDamaged()
+    {
+        if (_bosshealth > 0)
+        {
+            _bosshealth--;
 
+            Debug.Log("Boss Health " + _bosshealth);
+        }
 
     }
 

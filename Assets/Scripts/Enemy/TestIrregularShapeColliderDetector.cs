@@ -74,6 +74,7 @@ public void DetectObjectsInsideAOE()
         foreach (var composite in compositeColliders)
         {
             Collider2D[] results = new Collider2D[10];
+            
             int count = composite.OverlapCollider(filter, results);
 
             for (int i = 0; i < count; i++)

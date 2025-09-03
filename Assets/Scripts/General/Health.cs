@@ -7,27 +7,39 @@ public class Health : MonoBehaviour
     [SerializeField]
     int _health;
 
-    [SerializeField]    
+    [SerializeField]
     int _skillpoint;
     // Start is called before the first frame update
+    [SerializeField]
+    int _damagedealt;
+
+    public int _aggropoints = 0;
+
+    [SerializeField]
+    public int _basedaggroperhit;
+
+
+
 
     public void Start()
     {
 
-        
+
     }
 
     // Update is called once per frame
     public void Update()
     {
 
-        
-        
+
+
     }
 
-    public void Damage(){
+    public void Damage()
+    {
 
-        if (_health > 0){
+        if (_health > 0)
+        {
 
             _health--;
 
@@ -35,11 +47,23 @@ public class Health : MonoBehaviour
 
         }
 
-        else if(_health == 0){
+        else if (_health == 0)
+        {
 
             Debug.Log(this.gameObject.name + "is Dead");
         }
 
+
+    }
+
+    public void AddAggro()
+    {
+
+        _aggropoints += _basedaggroperhit;
+
+        Debug.Log("Aggropointsnya adalah " + _aggropoints + "dari gameobject " + this.gameObject) ;
+
+        
 
     }
 }

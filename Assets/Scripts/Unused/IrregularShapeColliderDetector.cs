@@ -10,7 +10,7 @@ public class IrregularShapeColliderDetector : MonoBehaviour
     private ContactFilter2D filter;
     private List<Collider2D> detectedObjects = new List<Collider2D>();
     private CircleCollider2D[] circlecolliders;
-    private ContactFilter2D filtercircle;
+    //private ContactFilter2D filtercircle;
     Health _healthscript;
     int _damage = 0;
 
@@ -43,7 +43,7 @@ public class IrregularShapeColliderDetector : MonoBehaviour
 
         }
 
-        filtercircle.useTriggers = false;
+        //filtercircle.useTriggers = false;
 
         
     }
