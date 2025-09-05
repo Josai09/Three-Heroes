@@ -68,7 +68,10 @@ public class Boss01 : MonoBehaviour
 
         FliptoTarget();
 
-        if (!_isAttacking)
+        float distance = Vector3.Distance(_target.transform.position, this.transform.position);
+
+
+        if (!_isAttacking && distance < 1.5f)
         {
 
             StartCoroutine(AttackRoll());
@@ -80,15 +83,20 @@ public class Boss01 : MonoBehaviour
 
     public void TargetandMove()
     {
+        if(_target == null) return;
 
+        if (_isAttacking)
+        {
+            _spriteanimator.SetBool("Walk", false);
 
+            return;
+        }
+        
         float distance = Vector3.Distance(_target.transform.position, this.transform.position);
-
+        
         this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, _target.transform.position, _speed * Time.deltaTime);
 
         MoveAnimation(distance);
-
-        
 
     }
 
@@ -97,8 +105,10 @@ public class Boss01 : MonoBehaviour
 
         if (distance > 0)
         {
-
+            
             _spriteanimator.SetBool("Walk", true);
+
+            //_isAttacking = false;
 
         }
         else if (distance == 0)
@@ -106,7 +116,8 @@ public class Boss01 : MonoBehaviour
 
             _spriteanimator.SetBool("Walk", false);
 
-            _isAttacking = true;
+            //_isAttacking = true;
+
 
 
 
@@ -135,11 +146,11 @@ public class Boss01 : MonoBehaviour
     IEnumerator AttackRoll()
     {
 
-        
         _isAttacking = true;
 
         int RandomNumber = 1;
         //int RandomNumber = Random.Range(1, 6);
+        //int RandomNumber = Random.Range(1,3);
 
         Debug.Log("random" + RandomNumber);
 
@@ -149,7 +160,7 @@ public class Boss01 : MonoBehaviour
 
             _spriteanimator.SetTrigger("1");
 
-            yield return null;
+            //yield return null;
 
             while (!_spriteanimator.GetCurrentAnimatorStateInfo(0).IsName("AOE_attack"))
             {

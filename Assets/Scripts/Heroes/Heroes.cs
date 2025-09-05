@@ -84,7 +84,9 @@ public class Heroes : MonoBehaviour
 
         //below is hardcode please find another way if have the time
         IndividualFLip0();
+
         IndividualFlip1();
+        
         IndividualFlip2();
         //FLiptoBoss();
         

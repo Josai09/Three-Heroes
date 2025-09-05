@@ -14,13 +14,18 @@ public class HeroesAttack : MonoBehaviour
     void Start()
     {
         hitbox = GetComponentInChildren<Hitbox>();
+
         boss01 = GameObject.Find("Demon").GetComponent<Boss01>();
+
         aggroManager = GameObject.Find("Manager").GetComponent<AggroManager>();
+
         _stats = GetComponentInParent<Health>();
 
         if (_stats != null)
         {
+
             Debug.Log("Handler found");
+
         }
     
 
@@ -67,10 +72,7 @@ public class HeroesAttack : MonoBehaviour
             AggroManager.Instance.UpdateTargetByAggro();
 
             _stats.AddAggro();
-
-        
-
-            
+         
         }
     }
 
